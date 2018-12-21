@@ -1,0 +1,48 @@
+<div>
+  <div class="row" style="text-align: center">
+    <div class="col-lg-12">
+      <h2>Top Favourite Selected Cryptocurrencies </h2>
+    </div>
+  </div>
+
+
+  <div class="row" style="padding: 2%;">
+
+    <div class="col-lg-12">
+      <table class="table table-bordered table-striped ">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Symbol</th>
+            <th scope="col" > Current Price</th>
+            <th scope="col" >Market Cap</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let items of favouriteCoin | orderBy: key : reverse | paginate: { itemsPerPage: 15, currentPage: p }; let i = index ">
+            <td>{{ i+1 }}</td>
+            <td style="background-color:black" class="text-white">
+              <a class="namesall">
+                 <img src="https://raw.githubusercontent.com/dziungles/cryptocurrency-logos/master/coins/32x32/{{items.website_slug}}.png" 
+                  width="23" height="23" class="mr-2-px" alt="coin">&nbsp; {{items.name}} 
+              </a>
+
+            </td>
+            <td style="background-color:greenyellow;text-align: center" class="text-white">{{items.symbol}}</td>
+
+
+            <td style="background-color:goldenrod;text-align: center" class="text-white">{{items.quotes.USD.price}}</td>
+
+            <td style="background-color:red;text-align: center" class="text-white">{{items.quotes.USD.market_cap}}</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+      <pagination-controls (pageChange)="p = $event" style="float: right"></pagination-controls>
+    </div>
+  </div>
+</div>

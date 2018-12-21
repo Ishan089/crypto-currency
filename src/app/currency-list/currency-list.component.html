@@ -1,0 +1,91 @@
+<img src="assets/coin.jpg">
+<div>
+  <div class="row">
+    <div class="col-12">
+      <form class="form-row my-4">
+        <div class="col-md-4 l-2">
+          <label for="Price">
+            <b>Price:</b>
+          </label>
+          <ion-range-slider  #sliderElement type="double" max="5000" min=".00001" from_shadow="true" to_shadow="true" grid="true" grid_num="4"
+            prefix=" " postfix="" decorate_both="" (onFinish)="myOnFinish($event, 'price')"></ion-range-slider>
+        </div>
+
+        <div class="col-md-4 l-4">
+          <label for="Cap">
+            <b>Cap:</b>
+          </label>
+          <ion-range-slider #sliderElement type="double" max="3000000000" min="10000000" from_shadow="true" to_shadow="true" grid="true"
+            grid_num="3" prefix=" " postfix="" decorate_both="false" (onFinish)="myOnFinish($event, 'market_cap')"></ion-range-slider>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead class="bg-primary-color text-white">
+          <tr>
+            <th >No.</th>
+            <th >Name</th>
+            <th> Symbol</th>
+            <th (click)="sort('quotes.USD.price')"> Current Price</th>
+            <th  (click)="sort('quotes.USD.market_cap')">Market Cap</th>
+            <th >Price Chart</th>
+            <th >Favourite</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr (press)="checkboxdisplay()" *ngFor="let items of listArr | orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+
+            <td style="background-color:royalblue"> {{ 1+i }}
+              <input type="checkbox" *ngIf="displaycheckbox" (change)="onChange(items.id, $event.target.checked)">
+            </td>
+
+            <td style="background-color:black" class="text-white">
+              <a class="namesall">
+                 <img src="https://raw.githubusercontent.com/dziungles/cryptocurrency-logos/master/coins/32x32/{{items.website_slug}}.png" 
+                  width="23" height="23" class="mr-2-px" alt="coin">&nbsp; {{items.name}} 
+              </a>
+
+            </td>
+
+            <td style="background-color:greenyellow;text-align: center" class="text-white">{{items.symbol}}</td>
+
+            <td style="background-color:goldenrod;text-align: center" class="text-white">{{items.quotes.USD.price}}</td>
+
+            <td style="background-color:red;text-align: center" class="text-white">{{items.quotes.USD.market_cap}}</td>
+
+            <td style="cursor: pointer;background-color:lightseagreen;text-align: center" (click)="gopricechart(v=items.id)" class="gochart text-white">
+            {{items.name}} Price Graph</td>
+
+            <td style="background-color:burlywood">
+
+              <i class="fa fa-heart lg" style="margin:25px" aria-hidden="true" (click)="onSelect(items.id)" [ngClass]="{active: isActive(items.id)}" ></i>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+      <pagination-controls (pageChange)="p = $event" style="float: left"></pagination-controls>
+
+    </div>
+
+  </div>
+
+  <div class="row" style="text-align: center">
+    <div class="col-lg-12 ">
+      <button class="btn btn-info" (click)="OnSelectCurrency()">Compare</button>
+    </div>
+  </div>
+
+</div>
